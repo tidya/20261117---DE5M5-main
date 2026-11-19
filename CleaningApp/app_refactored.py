@@ -92,14 +92,25 @@ if __name__ == '__main__':
     date_errors = None
 
     data = fileLoader(filepath=filepath_input)
+    totalRowCount = len(data)
+    print(totalRowCount)
 
     # Drop duplicates & NAs
     data = duplicateCleaner(data)
+    duplicateRowCount = totalRowCount - len(data)
+    print("Duplicate Rows: ", duplicateRowCount)
+
+    rowsBeforeNA = len(data)
     data = naCleaner(data)
+    naRowCount = rowsBeforeNA - len(data)
+    print("NA Rows: ", naRowCount)
 
     # Converting date columns into datetime
+    rowsBeforeDates = len(data)
     for col in date_columns:
         data = dateCleaner(col, data)
+    dateRows = rowsBeforeDates - len(data)
+    print("Invalid dates: ", dateRows)
     
     # Enriching the dataset
     data = enrich_dateDuration(df=data, colA='Book Returned', colB='Book checkout')
@@ -119,11 +130,17 @@ if __name__ == '__main__':
     print(data2)
     print('**************** DATA CLEANED ****************')
 
+    metrics = pd.DataFrame({
+        "Metric": ["Rows Loaded","Duplicate Rows","NA Rows","Bad Dates"],
+        "Value": [totalRowCount,duplicateRowCount,naRowCount,dateRows]
+    })
+    metrics.to_csv("Cleaning Metrics.csv",index=False)
+"""
 connection = sqlite3.connect("/data/library.db")
 data.to_sql("Loans",connection,if_exists="replace",index=False)
 data2.to_sql("Customers",connection,if_exists="replace",index=False)
 connection.close()
-
+"""
 
 """
     print('Writing to SQL Server...')
