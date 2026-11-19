@@ -1,3 +1,6 @@
+from pathlib import Path
+from datetime import datetime
+
 class Calculator:
     def __init__(self, a, b):
         self.a = a
@@ -22,5 +25,11 @@ class Calculator:
         return ans
     
 if __name__ == "__main__":
-    myCalc = Calculator(a=5,b=6)
-    print(myCalc.nirosh_index())
+    myCalc = Calculator(a=247,b=12)
+    answer = (myCalc.get_quotient())
+    print(answer)
+
+out = Path("/data/hello.txt")
+
+with out.open("a") as f:
+    f.write(f"{answer}\n")
