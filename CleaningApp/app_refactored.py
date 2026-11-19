@@ -2,6 +2,7 @@
 
 import pandas as pd
 import argparse
+import sqlite3
 #from sqlalchemy import create_engine
 #import pyodbc
     
@@ -117,6 +118,13 @@ if __name__ == '__main__':
 
     print(data2)
     print('**************** DATA CLEANED ****************')
+
+connection = sqlite3.connect("/data/library.db")
+data.to_sql("Loans",connection,if_exists="replace",index=False)
+data2.to_sql("Customers",connection,if_exists="replace",index=False)
+connection.close()
+
+
 """
     print('Writing to SQL Server...')
 

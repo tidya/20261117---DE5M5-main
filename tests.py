@@ -1,10 +1,10 @@
 import unittest
 import pandas as pd
 
-from app_refactored import naCleaner
-from app_refactored import dateCleaner
-from app_refactored import enrich_dateDuration
-from app_refactored import duplicateCleaner
+from CleaningApp.app_refactored import naCleaner
+from CleaningApp.app_refactored import dateCleaner
+from CleaningApp.app_refactored import enrich_dateDuration
+from CleaningApp.app_refactored import duplicateCleaner
 
 
 class TestFunctions(unittest.TestCase):
